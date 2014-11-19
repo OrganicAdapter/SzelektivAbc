@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Kezdőlap";
+}
+
+<div id="searchcontainer">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div id="searchbar">
+            @Html.TextBox("SearchValue")
+        </div>
+        <div>
+            <input type="submit" value="Keresés" class="btn btn-default" />
+        </div>
+    }
+</div>

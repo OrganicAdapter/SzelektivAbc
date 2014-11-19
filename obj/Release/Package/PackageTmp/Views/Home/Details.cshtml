@@ -1,0 +1,21 @@
+﻿@model SzelektivABC.Models.Item
+
+@{
+    ViewBag.Title = "Részletek";
+}
+
+<h1> @Model.Name </h1>
+
+<div>
+    @Model.Description
+</div>
+
+<div>
+    <ul>
+        @foreach (var item in Model.Pictograms)
+        { 
+            <li> @item.Name </li>
+        }
+    </ul>
+</div>
+

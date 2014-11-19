@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ProductModelsStoreContainer" CdmEntityContainer="ProductModelsContainer">
+    <EntitySetMapping Name="Items">
+      <EntityTypeMapping TypeName="IsTypeOf(ProductModels.Item)">
+        <MappingFragment StoreEntitySet="Items">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pictograms">
+      <EntityTypeMapping TypeName="IsTypeOf(ProductModels.Pictogram)">
+        <MappingFragment StoreEntitySet="Pictograms">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="ItemPictogram" TypeName="ProductModels.ItemPictogram" StoreEntitySet="ItemPictogram">
+      <EndProperty Name="Item">
+        <ScalarProperty Name="Id" ColumnName="Items_Id" />
+      </EndProperty>
+      <EndProperty Name="Pictogram">
+        <ScalarProperty Name="Id" ColumnName="Pictograms_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

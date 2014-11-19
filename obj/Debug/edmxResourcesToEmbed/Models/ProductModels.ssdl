@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProductModels.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ProductModelsStoreContainer">
+    <EntitySet Name="Items" EntityType="ProductModels.Store.Items" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Pictograms" EntityType="ProductModels.Store.Pictograms" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ItemPictogram" EntityType="ProductModels.Store.ItemPictogram" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_ItemPictogram_Item" Association="ProductModels.Store.FK_ItemPictogram_Item">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="ItemPictogram" EntitySet="ItemPictogram" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ItemPictogram_Pictogram" Association="ProductModels.Store.FK_ItemPictogram_Pictogram">
+      <End Role="Pictogram" EntitySet="Pictograms" />
+      <End Role="ItemPictogram" EntitySet="ItemPictogram" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Items">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" Nullable="false" />
+    <Property Name="Image" Type="nvarchar" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Pictograms">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" />
+    <Property Name="Image" Type="nvarchar" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ItemPictogram">
+    <Key>
+      <PropertyRef Name="Items_Id" />
+      <PropertyRef Name="Pictograms_Id" />
+    </Key>
+    <Property Name="Items_Id" Type="int" Nullable="false" />
+    <Property Name="Pictograms_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_ItemPictogram_Item">
+    <End Role="Item" Type="ProductModels.Store.Items" Multiplicity="1" />
+    <End Role="ItemPictogram" Type="ProductModels.Store.ItemPictogram" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ItemPictogram">
+        <PropertyRef Name="Items_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ItemPictogram_Pictogram">
+    <End Role="ItemPictogram" Type="ProductModels.Store.ItemPictogram" Multiplicity="*" />
+    <End Role="Pictogram" Type="ProductModels.Store.Pictograms" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Pictogram">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ItemPictogram">
+        <PropertyRef Name="Pictograms_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

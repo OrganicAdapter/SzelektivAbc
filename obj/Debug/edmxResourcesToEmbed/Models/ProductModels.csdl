@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="ProductModels" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="ProductModelsContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Items" EntityType="ProductModels.Item" />
+    <EntitySet Name="Pictograms" EntityType="ProductModels.Pictogram" />
+    <AssociationSet Name="ItemPictogram" Association="ProductModels.ItemPictogram">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="Pictogram" EntitySet="Pictograms" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <Property Name="Description" Type="String" Nullable="false" />
+    <Property Name="Image" Type="String" Nullable="false" />
+    <NavigationProperty Name="Pictograms" Relationship="ProductModels.ItemPictogram" FromRole="Item" ToRole="Pictogram" />
+  </EntityType>
+  <EntityType Name="Pictogram">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <Property Name="Image" Type="String" Nullable="false" />
+    <NavigationProperty Name="Items" Relationship="ProductModels.ItemPictogram" FromRole="Pictogram" ToRole="Item" />
+  </EntityType>
+  <Association Name="ItemPictogram">
+    <End Type="ProductModels.Item" Role="Item" Multiplicity="*" />
+    <End Type="ProductModels.Pictogram" Role="Pictogram" Multiplicity="*" />
+  </Association>
+</Schema>

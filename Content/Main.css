@@ -1,0 +1,49 @@
+﻿html, body {
+    float: left;
+    clear: both;
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+}
+
+#mainbody {
+    float: left;
+    clear: both;
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    background-color: green;
+}
+
+#header {
+    float: left;
+    clear: both;
+    width: 100%;
+}
+
+#menu {
+    float: left;
+    clear: both;
+    list-style-type: none;
+    width: 100%;
+}
+
+    #menu li {
+        float: left;
+        clear: none;
+        display: inline;
+        width: 20%;
+        height: 10%;
+    }
+
+#searchcontainer {
+    position: relative;
+    top: 40%;
+    left: 40%;
+}
+
+#searchbar {
+    float: left;
+    clear: none;
+    margin-right: 10px;
+}

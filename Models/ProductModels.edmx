@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ProductModels.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ProductModelsStoreContainer">
+    <EntitySet Name="Items" EntityType="ProductModels.Store.Items" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Pictograms" EntityType="ProductModels.Store.Pictograms" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ItemPictogram" EntityType="ProductModels.Store.ItemPictogram" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_ItemPictogram_Item" Association="ProductModels.Store.FK_ItemPictogram_Item">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="ItemPictogram" EntitySet="ItemPictogram" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ItemPictogram_Pictogram" Association="ProductModels.Store.FK_ItemPictogram_Pictogram">
+      <End Role="Pictogram" EntitySet="Pictograms" />
+      <End Role="ItemPictogram" EntitySet="ItemPictogram" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Items">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" Nullable="false" />
+    <Property Name="Image" Type="nvarchar" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Pictograms">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" />
+    <Property Name="Image" Type="nvarchar" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ItemPictogram">
+    <Key>
+      <PropertyRef Name="Items_Id" />
+      <PropertyRef Name="Pictograms_Id" />
+    </Key>
+    <Property Name="Items_Id" Type="int" Nullable="false" />
+    <Property Name="Pictograms_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_ItemPictogram_Item">
+    <End Role="Item" Type="ProductModels.Store.Items" Multiplicity="1" />
+    <End Role="ItemPictogram" Type="ProductModels.Store.ItemPictogram" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ItemPictogram">
+        <PropertyRef Name="Items_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ItemPictogram_Pictogram">
+    <End Role="ItemPictogram" Type="ProductModels.Store.ItemPictogram" Multiplicity="*" />
+    <End Role="Pictogram" Type="ProductModels.Store.Pictograms" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Pictogram">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ItemPictogram">
+        <PropertyRef Name="Pictograms_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="ProductModels" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="ProductModelsContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Items" EntityType="ProductModels.Item" />
+          <EntitySet Name="Pictograms" EntityType="ProductModels.Pictogram" />
+          <AssociationSet Name="ItemPictogram" Association="ProductModels.ItemPictogram">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="Pictogram" EntitySet="Pictograms" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" />
+          <Property Name="Image" Type="String" Nullable="false" />
+          <NavigationProperty Name="Pictograms" Relationship="ProductModels.ItemPictogram" FromRole="Item" ToRole="Pictogram" />
+        </EntityType>
+        <EntityType Name="Pictogram">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Image" Type="String" Nullable="false" />
+          <NavigationProperty Name="Items" Relationship="ProductModels.ItemPictogram" FromRole="Pictogram" ToRole="Item" />
+        </EntityType>
+        <Association Name="ItemPictogram">
+          <End Type="ProductModels.Item" Role="Item" Multiplicity="*" />
+          <End Type="ProductModels.Pictogram" Role="Pictogram" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ProductModelsStoreContainer" CdmEntityContainer="ProductModelsContainer">
+    <EntitySetMapping Name="Items">
+      <EntityTypeMapping TypeName="IsTypeOf(ProductModels.Item)">
+        <MappingFragment StoreEntitySet="Items">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pictograms">
+      <EntityTypeMapping TypeName="IsTypeOf(ProductModels.Pictogram)">
+        <MappingFragment StoreEntitySet="Pictograms">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="ItemPictogram" TypeName="ProductModels.ItemPictogram" StoreEntitySet="ItemPictogram">
+      <EndProperty Name="Item">
+        <ScalarProperty Name="Id" ColumnName="Items_Id" />
+      </EndProperty>
+      <EndProperty Name="Pictogram">
+        <ScalarProperty Name="Id" ColumnName="Pictograms_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

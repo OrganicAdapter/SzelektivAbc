@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Szelektív ABC</title>
+    @Styles.Render("~/Content/Main.css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div id="header">
+        <ul id="menu">
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <li>@Html.ActionLink("Mi is ez?", "About", "Home")</li>
+                <li>@Html.ActionLink("Jelmagyarázat", "About", "Home")</li>
+            }
+            else
+            {
+                <li>@Html.ActionLink("Termékek", "Index", "ItemsAdmin")</li>
+                <li>@Html.ActionLink("Piktogramok", "Index", "PictogramsAdmin")</li>
+            }
+
+            <li>@Html.ActionLink("Szelektív ABC", "Index", "Home")</li>
+            <li>@Html.ActionLink("Elérhetőség", "Contact", "Home")</li>
+            <li><a href="http://www.facebook.com">Facebook</a></li>
+        </ul>
+
+        <div class="logout">
+            @if (User.Identity.IsAuthenticated)
+            {
+                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <a href="javascript:document.getElementById('logoutForm').submit()">Kijelentkezés</a>
+                }
+            }
+        </div>
+    </div>
+    <div id="mainbody">
+        @RenderBody()
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
